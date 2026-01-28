@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli | Aylara Kırtasiye</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .nav-link.active {
+            background-color: var(--brand-secondary) !important;
+            color: white !important;
+            border-radius: 8px;
+        }
+
+        .nav-link {
+            color: var(--brand-primary);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(0, 33, 71, 0.05);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <div class="bg-brand-primary text-white py-5 mb-5 shadow-sm overflow-hidden position-relative"
+        style="min-height: 160px;">
+        <div class="position-absolute top-0 start-0 w-100 h-100"
+            style="background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%); pointer-events: none;">
+        </div>
+        <div class="container position-relative h-100 d-flex flex-column justify-content-center">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold m-0 d-flex align-items-center gap-3">
+                        Yönetim Paneli
+                        <i class="bi bi-gear-fill fs-3 text-brand-secondary animate-spin-slow"></i>
+                    </h2>
+                    <p class="mb-0 text-white text-opacity-75">Mağaza yönetimi, sipariş takibi ve müşteri ilişkileri</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <button id="cikisBtn"
+                        class="btn btn-outline-light rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 transition-all">
+                        <i class="bi bi-box-arrow-right"></i>
+                        Güvenli Çıkış
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow-1">
+        <div class="container">
+
+            <!-- Dashboard Stats -->
+            <div class="row g-4 mb-5" id="dashboardStats">
+                <!-- Ciro -->
+                <div class="col-md-4">
+                    <div
+                        class="card border-0 shadow-sm rounded-4 h-100 bg-brand-primary text-white overflow-hidden position-relative">
+                        <div class="card-body p-4 position-relative z-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="small opacity-75 text-uppercase fw-bold mb-1">Toplam Ciro</div>
+                                    <h2 class="display-6 fw-bold mb-0" id="statGelir">0.00 ₺</h2>
+                                </div>
+                                <div class="bg-white bg-opacity-10 rounded-circle p-2 d-flex">
+                                    <i class="bi bi-wallet2 fs-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Siparişler -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-white overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="small text-muted text-uppercase fw-bold mb-1">Toplam Sipariş</div>
+                                    <h2 class="display-6 fw-bold text-brand-primary mb-0" id="statSiparis">0</h2>
+                                </div>
+                                <div
+                                    class="bg-brand-secondary bg-opacity-10 text-brand-secondary rounded-circle p-2 d-flex">
+                                    <i class="bi bi-bag-check fs-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Müşteriler -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-white overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="small text-muted text-uppercase fw-bold mb-1">Kayıtlı Müşteri</div>
+                                    <h2 class="display-6 fw-bold text-brand-primary mb-0" id="statMusteri">0</h2>
+                                </div>
+                                <div class="bg-info bg-opacity-10 text-info rounded-circle p-2 d-flex">
+                                    <i class="bi bi-people fs-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Nav for Sections -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 sticky-top" style="top: 80px; z-index: 100;">
+                <div class="card-body p-2">
+                    <ul class="nav nav-pills nav-fill fw-bold" id="adminTabs">
+                        <li class="nav-item">
+                            <button class="nav-link active py-3 d-flex align-items-center justify-content-center gap-2"
+                                id="btn-envanter" onclick="showTab('envanter')">
+                                <i class="bi bi-box-seam"></i> Envanter
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link py-3 d-flex align-items-center justify-content-center gap-2"
+                                id="btn-siparisler" onclick="showTab('siparisler')">
+                                <i class="bi bi-receipt"></i> Siparişler
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link py-3 d-flex align-items-center justify-content-center gap-2"
+                                id="btn-musteriler" onclick="showTab('musteriler')">
+                                <i class="bi bi-people"></i> Müşteriler
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Envanter Section -->
+            <div id="tab-envanter" class="admin-section fade-in tab-section">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+                    <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold text-brand-primary m-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-grid-fill"></i> Ürün Yönetimi
+                        </h5>
+                        <button id="yeniUrunBtn" class="btn btn-brand-primary px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="modal" data-bs-target="#urunModal">
+                            <i class="bi bi-plus-lg me-2"></i> Yeni Ürün Ekle
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="urunTable">
+                            <thead class="bg-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="ps-4">#ID</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Kategori</th>
+                                    <th>Fiyat</th>
+                                    <th>Stok</th>
+                                    <th class="text-end pe-4">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0" id="adminUrunBody">
+                                <!-- JS ile doldurulacak -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Siparişler Section -->
+            <div id="tab-siparisler" class="admin-section fade-in d-none tab-section">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+                    <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold text-brand-primary m-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-receipt-cutoff"></i> Son Siparişler
+                        </h5>
+
+                        <!-- Actions Bar (Bulk Actions) -->
+                        <div id="bulkActionBar" class="d-none animate__animated animate__fadeInRight">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" id="topluSiparisSilBtn">
+                                    <i class="bi bi-trash me-1"></i> Sil (<span id="bulkActionCount">0</span>)
+                                </button>
+                                <button class="btn btn-success btn-sm rounded-pill px-3" onclick="markSelectedReady()">
+                                    <i class="bi bi-check2-circle me-1"></i> Hazırla
+                                </button>
+                                <button class="btn btn-primary btn-sm rounded-pill px-3"
+                                    onclick="markSelectedDelivered()">
+                                    <i class="bi bi-truck me-1"></i> Teslim Et
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm rounded-circle"
+                                    onclick="cancelSelectionMode()" title="İptal">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button id="selectModeBtn" class="btn btn-light btn-sm rounded-pill px-3 text-muted"
+                            onclick="toggleSelectionMode()">
+                            <i class="bi bi-check2-square me-2"></i> Seç
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="siparisTable">
+                            <thead class="bg-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="ps-4" style="width: 40px;">
+                                        <div class="form-check d-none" id="selectAllContainer">
+                                            <input class="form-check-input" type="checkbox" id="selectAllOrders">
+                                        </div>
+                                        <span id="hashHeader">#</span>
+                                    </th>
+                                    <th>#ID</th>
+                                    <th>Müşteri</th>
+                                    <th>Tutar</th>
+                                    <th>Ödeme</th>
+                                    <th>Durum</th>
+                                    <th>Tarih</th>
+                                    <th class="text-end pe-4">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0" id="adminSiparisBody">
+                                <!-- JS ile doldurulacak -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Müşteriler Section -->
+            <div id="tab-musteriler" class="admin-section fade-in d-none tab-section">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+                    <div class="card-header bg-white border-0 p-4">
+                        <h5 class="fw-bold text-brand-primary m-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-people-fill"></i> Kayıtlı Müşteriler
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="musteriTable">
+                            <thead class="bg-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="ps-4">Müşteri Bilgileri</th>
+                                    <th>Telefon</th>
+                                    <th>Adres</th>
+                                    <th class="text-end pe-4">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0" id="adminKullaniciBody">
+                                <!-- JS ile doldurulacak -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modals -->
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold" id="msgTitle">Mesaj</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="msgBody"></div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-brand-primary rounded-pill px-4"
+                        data-bs-dismiss="modal">Tamam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 bg-warning bg-opacity-10">
+                    <h5 class="modal-title fw-bold text-warning-emphasis">Onay</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 fw-medium" id="confirmBody"></div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-brand-primary rounded-pill px-4" id="confirmBtnYes">Evet,
+                        Onayla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ürün Modal (Ekle/Düzenle Tek Modal) -->
+    <div class="modal fade" id="urunModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-brand-primary text-white border-0">
+                    <h5 class="modal-title fw-bold" id="urunModalTitle">Ürün İşlemleri</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="urunId">
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold">Ürün Adı</label>
+                        <input type="text" class="form-control bg-light border-0" id="urunAd">
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted fw-bold">Fiyat (TL)</label>
+                            <input type="number" step="0.01" class="form-control bg-light border-0" id="urunFiyat">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted fw-bold">Stok</label>
+                            <input type="number" class="form-control bg-light border-0" id="urunStok">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold">Kategori</label>
+                        <select class="form-select bg-light border-0" id="urunKategori"></select>
+                        <input type="text" class="form-control bg-light border-0 mt-2 d-none" id="urunYeniKategori"
+                            placeholder="Yeni kategori adı...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold">Açıklama</label>
+                        <textarea class="form-control bg-light border-0" id="urunAciklama" rows="2"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small text-muted fw-bold">Resim</label>
+                        <input type="file" class="form-control bg-light border-0" id="urunResim">
+                    </div>
+                    <button type="button" class="btn btn-brand-primary w-100 rounded-pill py-2 fw-bold"
+                        id="urunKaydetBtn">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sipariş Detay Modal -->
+    <div class="modal fade" id="siparisModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-brand-secondary text-white border-0">
+                    <h5 class="modal-title fw-bold">Sipariş Detayı</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6 border-end">
+                            <h6 class="text-brand-primary fw-bold mb-3 border-bottom pb-2">Müşteri Bilgileri</h6>
+                            <input type="hidden" id="detayId">
+                            <div class="mb-3">
+                                <label class="small text-muted">Ad Soyad</label>
+                                <input type="text" class="form-control bg-light border-0" id="detayAd">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small text-muted">Telefon</label>
+                                <input type="text" class="form-control bg-light border-0" id="detayTel">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small text-muted">E-posta</label>
+                                <input type="text" class="form-control bg-light border-0" id="detayEmail">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small text-muted">Adres</label>
+                                <textarea class="form-control bg-light border-0" id="detayAdres" rows="2"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small text-muted">Tarih</label>
+                                <input type="text" class="form-control bg-light border-0" id="detayTarih" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small text-muted fw-bold">Sipariş Durumu</label>
+                                <select class="form-select border-0 bg-warning bg-opacity-10 text-dark fw-bold"
+                                    id="detayDurum">
+                                    <option value="Bekliyor">Bekliyor</option>
+                                    <option value="Hazırlanıyor">Hazırlanıyor</option>
+                                    <option value="Yola Çıktı">Yola Çıktı</option>
+                                    <option value="Teslim Edildi">Teslim Edildi</option>
+                                    <option value="İptal Edildi">İptal Edildi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-brand-primary fw-bold mb-3 border-bottom pb-2">Sipariş İçeriği</h6>
+                            <div class="table-responsive" style="max-height: 300px; overflow-y:auto;">
+                                <table class="table table-sm table-borderless align-middle">
+                                    <tbody id="detayUrunler"></tbody>
+                                </table>
+                            </div>
+                            <div class="mt-3 pt-3 border-top d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-muted">Toplam Tutar:</span>
+                                <span class="fs-4 fw-bold text-brand-secondary" id="detayToplam">0.00 TL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 bg-light">
+                    <button type="button" class="btn btn-outline-danger rounded-pill px-4 me-auto" id="siparisSilBtn">
+                        <i class="bi bi-trash"></i> Siparişi Sil
+                    </button>
+                    <button type="button" class="btn btn-brand-primary rounded-pill px-4"
+                        id="siparisKaydetBtn">Değişiklikleri Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kullanıcı (Müşteri) Düzenle Modal -->
+    <div class="modal fade" id="kullaniciModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-brand-primary text-white border-0">
+                    <h5 class="modal-title fw-bold text-white">Müşteri Düzenle</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="kulId">
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold">Ad Soyad</label>
+                        <input type="text" class="form-control bg-light border-0" id="kulAd">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold">E-posta</label>
+                        <input type="email" class="form-control bg-light border-0" id="kulEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold">Telefon</label>
+                        <input type="text" class="form-control bg-light border-0" id="kulTel">
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-brand-primary fw-bold border-bottom pb-2">Adres Bilgileri</h6>
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <label class="small text-muted">Mahalle / Sokak</label>
+                                <input type="text" class="form-control bg-light border-0" id="kulSokak">
+                            </div>
+                            <div class="col-4">
+                                <label class="small text-muted">Numara</label>
+                                <input type="text" class="form-control bg-light border-0" id="kulNo">
+                            </div>
+                            <div class="col-4">
+                                <label class="small text-muted">Posta Kodu</label>
+                                <input type="text" class="form-control bg-light border-0" id="kulPK">
+                            </div>
+                            <div class="col-4">
+                                <label class="small text-muted">Şehir</label>
+                                <input type="text" class="form-control bg-light border-0" id="kulSehir">
+                            </div>
+                            <div class="col-12">
+                                <label class="small text-muted">Ülke</label>
+                                <input type="text" class="form-control bg-light border-0" id="kulUlke">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-brand-primary w-100 rounded-pill py-2 fw-bold text-white"
+                        id="kulKaydetBtn">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="footer"></div>
+
+    <script src="/js/sepet-utils.js"></script>
+    <script src="/components/navbar.js?v=3"></script>
+    <script src="/components/footer.js?v=3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/admin.js?v=99"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof adminPanelInit === 'function') {
+                adminPanelInit();
+            }
+        });
+    </script>
+</body>
+
+</html>

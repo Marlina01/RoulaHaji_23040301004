@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda | Aylara Kırtasiye</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <!-- Navbar (JS ile yüklenecek) -->
+    <div id="navbar"></div>
+
+    <!-- Main Content -->
+    <main class="container py-5 flex-grow-1">
+
+        <!-- Header Section -->
+        <div class="text-center mb-5 fade-in">
+            <h1 class="display-4 fw-bold text-brand-primary mb-3">Hakkımızda</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 700px;">
+                Eğitim ve ofis hayatınızı kolaylaştıran çözümler.
+            </p>
+        </div>
+
+        <!-- Aylara Kırtasiye Section -->
+        <div class="card border-0 shadow-sm mb-5 hover-card">
+            <div class="card-body p-4 p-lg-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-1 mb-3 mb-lg-0 text-center">
+                        <div class="bg-brand-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 64px; height: 64px;">
+                            <i class="bi bi-building fs-2"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-11">
+                        <h2 class="h3 fw-bold text-brand-primary mb-3">Aylara Kırtasiye</h2>
+                        <p class="text-muted mb-3">
+                            Aylara Kırtasiye, okul ve ofis ihtiyaçlarına yönelik ürünleri kullanıcı dostu bir arayüz ile
+                            sunmayı amaçlayan bir web sitesidir.
+                        </p>
+                        <p class="text-muted mb-3">
+                            Site, ürünlerin kolayca görüntülenebilmesi, favorilere eklenmesi ve sipariş sürecinin
+                            anlaşılır şekilde ilerlemesi hedeflenerek tasarlanmıştır.
+                        </p>
+                        <p class="text-muted mb-0">
+                            Kullanıcı deneyimi, sade tasarım ve erişilebilirlik ön planda tutularak geliştirilen bu
+                            platform, modern web teknolojileri kullanılarak oluşturulmuştur.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security & Privacy Section -->
+        <div class="mb-4">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <i class="bi bi-shield-lock-fill fs-2 text-brand-secondary"></i>
+                <h2 class="h3 fw-bold text-brand-primary mb-0">Güvenlik ve Gizlilik</h2>
+            </div>
+            <p class="text-muted mb-4 lead">Web sitemizde kullanıcı güvenliği ve gizliliği öncelikli olarak ele
+                alınmaktadır.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 256-Bit SSL -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body p-4">
+                        <h3 class="h5 fw-bold text-brand-primary mb-3 d-flex align-items-center gap-2">
+                            <i class="bi bi-lock text-success"></i>
+                            256-Bit SSL Güvenliği Nedir?
+                        </h3>
+                        <p class="card-text text-muted">
+                            Sitemiz, <strong>256-bit SSL (Secure Socket Layer)</strong> şifreleme teknolojisi ile
+                            korunmaktadır.
+                        </p>
+                        <p class="card-text text-muted">
+                            Bu teknoloji sayesinde kullanıcı ile web sitesi arasında iletilen tüm bilgiler (kişisel
+                            bilgiler, iletişim bilgileri ve ödeme adımları) şifrelenerek aktarılır.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Policy -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body p-4">
+                        <h3 class="h5 fw-bold text-brand-primary mb-3 d-flex align-items-center gap-2">
+                            <i class="bi bi-file-earmark-text text-info"></i>
+                            Gizlilik Politikası
+                        </h3>
+                        <ul class="list-unstyled text-muted">
+                            <li class="mb-2 d-flex align-items-start gap-2">
+                                <i class="bi bi-check-circle-fill text-brand-secondary mt-1"></i>
+                                <span>Kullanıcılara ait kişisel bilgiler gizli tutulur.</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start gap-2">
+                                <i class="bi bi-check-circle-fill text-brand-secondary mt-1"></i>
+                                <span>Bilgiler üçüncü kişilerle paylaşılmaz.</span>
+                            </li>
+                            <li class="mb-0 d-flex align-items-start gap-2">
+                                <i class="bi bi-check-circle-fill text-brand-secondary mt-1"></i>
+                                <span>Veriler yalnızca site işleyişi ve sipariş süreci için kullanılır.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer (JS ile yüklenecek) -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sepet-utils.js"></script>
+    <script src="components/navbar.js?v=3"></script>
+    <script src="components/footer.js?v=3"></script>
+</body>
+
+</html>

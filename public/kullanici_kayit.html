@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aylara Kırtasiye • Kayıt Ol</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-brand-primary">
+
+    <div id="navbar"></div>
+
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5 col-lg-4">
+
+                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden"
+                        style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
+                        <div class="card-body p-5">
+
+                            <div class="text-center mb-4">
+                                <div
+                                    class="bg-brand-primary text-white rounded-circle d-inline-flex p-3 mb-3 shadow-sm scale-hover">
+                                    <i class="bi bi-person-plus-fill fs-3"></i>
+                                </div>
+                                <h4 class="fw-bold text-brand-primary">Kayıt Ol</h4>
+                                <p class="text-muted small">Yeni bir hesap oluşturun.</p>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="ad" placeholder="Ad Soyad">
+                                <label for="ad">Ad Soyad</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="E-posta">
+                                <label for="email">E-posta Adresi</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" id="telefon" placeholder="Telefon">
+                                <label for="telefon">Telefon</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="adres" placeholder="Adres"
+                                    style="height: 100px"></textarea>
+                                <label for="adres">Adres</label>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="sifre" placeholder="Şifre">
+                                <label for="sifre">Şifre</label>
+                            </div>
+
+                            <button class="btn btn-brand-primary w-100 py-3 fw-bold rounded-3 shadow-sm" id="kayitBtn">
+                                Hesap Oluştur
+                            </button>
+
+                            <div class="text-center mt-3 small" id="mesaj"></div>
+
+                            <div class="text-center mt-4 border-top pt-3">
+                                <p class="small text-muted mb-1">Zaten hesabınız var mı?</p>
+                                <a href="/kullanici_giris.html"
+                                    class="text-brand-secondary fw-bold text-decoration-none">Giriş Yap</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="/js/sepet-utils.js"></script>
+    <script src="/components/navbar.js?v=3"></script>
+    <script src="/components/footer.js?v=3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("kayitBtn").addEventListener("click", async () => {
+            const ad_soyad = document.getElementById("ad").value;
+            const email = document.getElementById("email").value;
+            const telefon = document.getElementById("telefon").value;
+            const adres = document.getElementById("adres").value;
+            const sifre = document.getElementById("sifre").value;
+            const msg = document.getElementById("mesaj");
+
+            try {
+                const res = await fetch("/api/kayit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ ad_soyad, email, telefon, adres, sifre })
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    msg.innerHTML = `<div class='text-success fw-bold'>Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...</div>`;
+                    setTimeout(() => location.href = "/kullanici_giris.html", 1500);
+                } else {
+                    msg.innerHTML = `<div class='text-danger'>${data.hata}</div>`;
+                }
+            } catch (err) {
+                msg.innerHTML = `<div class='text-danger'>Sunucu hatası</div>`;
+            }
+        });
+    </script>
+</body>
+
+</html>

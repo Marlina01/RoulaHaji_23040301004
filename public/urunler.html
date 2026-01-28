@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aylara Kırtasiye • Ürünler</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <div id="navbar"></div>
+
+  <main class="flex-grow-1">
+    <div class="container py-4">
+
+      <!-- Header -->
+      <div class="text-center mb-5 fade-in">
+        <h1 class="display-5 fw-bold text-brand-primary">Koleksiyonumuz</h1>
+        <p class="text-muted lead">Okul ve ofis ihtiyaçlarınız için seçkin ürünler</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Sidebar / Filters -->
+        <div class="col-lg-3">
+          <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 0px; z-index: 10;">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-brand-primary mb-4">Filtrele</h5>
+
+              <div class="mb-4">
+                <label class="form-label small text-muted fw-bold">Arama</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                  <input type="text" class="form-control bg-light border-0" id="aramaKutusu" placeholder="Ürün ara...">
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label small text-muted fw-bold">Kategori</label>
+                <select class="form-select bg-light border-0" id="kategoriSecimi">
+                  <option value="">Tümü</option>
+                  <!-- Kategoriler JS ile yüklenecek -->
+                </select>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label small text-muted fw-bold">Sıralama</label>
+                <select class="form-select bg-light border-0" id="siralaSecimi">
+                  <option value="">Önerilen</option>
+                  <option value="artan">Fiyat: Artan</option>
+                  <option value="azalan">Fiyat: Azalan</option>
+                  <option value="yeni">En Yeniler</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="col-lg-9">
+          <div class="row g-4" id="urunListesi">
+            <!-- Ürünler JS ile buraya gelecek -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/sepet-utils.js"></script>
+  <script src="components/navbar.js?v=3"></script>
+  <script src="components/footer.js?v=3"></script>
+  <script src="js/urunler.js"></script>
+  <script>
+    // Kategorileri API'den çek ve doldur
+    async function kategorileriYukle() {
+      try {
+        const res = await fetch('/api/kategoriler');
+        const kategoriler = await res.json();
+
+        const select = document.getElementById('kategoriSecimi');
+        // Mevcut seçimi korumak isteyebiliriz ama sayfa yenilendiğinde sıfırlanır
+        // "Tümü" seçeneği her zaman kalsın
+        select.innerHTML = '<option value="">Tümü</option>';
+
+        kategoriler.forEach(kat => {
+          const opt = document.createElement('option');
+          opt.value = kat;
+          opt.textContent = kat; // DB'deki ismin aynısı görünsün
+          select.appendChild(opt);
+        });
+      } catch (err) {
+        console.error("Kategoriler yüklenemedi:", err);
+      }
+    }
+
+    // Merkezi Filtreleme Fonksiyonu
+    function filtrele() {
+      const arama = document.getElementById('aramaKutusu').value;
+      const kategori = document.getElementById('kategoriSecimi').value;
+      const siralama = document.getElementById('siralaSecimi').value;
+
+      urunleriGetirVeBas({
+        hedefId: 'urunListesi',
+        arama: arama,
+        kategori: kategori,
+        siralama: siralama
+      });
+    }
+
+    // İlk yükleme
+    (async () => {
+      await kategorileriYukle();
+      urunleriGetirVeBas({ hedefId: 'urunListesi' });
+    })();
+
+    // Event Listeners - Hepsi aynı filtrele fonksiyonunu çağırır
+    document.getElementById('aramaKutusu').addEventListener('input', filtrele);
+    document.getElementById('kategoriSecimi').addEventListener('change', filtrele);
+    document.getElementById('siralaSecimi').addEventListener('change', filtrele);
+  </script>
+</body>
+
+</html>

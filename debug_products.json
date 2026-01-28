@@ -1,0 +1,56 @@
+[
+  {
+    "id": 257,
+    "ad": "Spiral Defter A4",
+    "kategori": "Defter",
+    "fiyat": 79.9,
+    "stok": 45,
+    "aciklama": "A4 spiral defter, çizgili. Okul ve ofis için ideal.",
+    "resim": "placeholder.svg"
+  },
+  {
+    "id": 258,
+    "ad": "Tükenmez Kalem 0.7",
+    "kategori": "Kalem",
+    "fiyat": 19.9,
+    "stok": 120,
+    "aciklama": "Akıcı yazım, 0.7 uç kalınlığı.",
+    "resim": "placeholder.svg"
+  },
+  {
+    "id": 259,
+    "ad": "Fosforlu Kalem Seti",
+    "kategori": "Kalem",
+    "fiyat": 99.9,
+    "stok": 30,
+    "aciklama": "5li fosforlu kalem seti, canlı renkler.",
+    "resim": "placeholder.svg"
+  },
+  {
+    "id": 260,
+    "ad": "Makas Paslanmaz",
+    "kategori": "Ofis",
+    "fiyat": 70,
+    "stok": 25,
+    "aciklama": "Paslanmaz çelik, ergonomik tutuş.",
+    "resim": "placeholder.svg"
+  },
+  {
+    "id": 262,
+    "ad": "Klasör Dosya",
+    "kategori": "Dosyalama",
+    "fiyat": 50,
+    "stok": 10,
+    "aciklama": "hebfkjbf",
+    "resim": "1768562378923.png"
+  },
+  {
+    "id": 263,
+    "ad": "tpu defter",
+    "kategori": "Defter",
+    "fiyat": 50,
+    "stok": 8,
+    "aciklama": "hebfkjbf",
+    "resim": "1768508756286.png"
+  }
+]

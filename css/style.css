@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Brand Colors */
+  --brand-base: #F4F6F8;
+  /* 55% Backgrounds - Paper White */
+  --brand-primary: #002147;
+  /* 25% Navigation, Headers - Oxford Blue */
+  --brand-secondary: #C5A059;
+  /* 10% Buttons, Highlights - Antique Gold */
+  --brand-secondary-dark: #b08d4b;
+  /* Darker Gold for hover/borders */
+  --brand-functional: #9E1B32;
+  /* 5% Alerts, Errors - Crimson */
+  --brand-text: #1A1A1A;
+  /* 5% Text - Charcoal */
+}
+
+/* Base Styles */
+html,
+body {
+  height: 100%;
+  background-color: var(--brand-base) !important;
+  color: var(--brand-text);
+  font-family: 'Poppins', sans-serif;
+  /* Premium Font */
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Utilities */
+.bg-brand-primary {
+  background-color: var(--brand-primary) !important;
+  color: #fff;
+}
+
+.text-brand-primary {
+  color: var(--brand-primary) !important;
+}
+
+.text-brand-secondary {
+  color: var(--brand-secondary-dark) !important;
+  /* Darker gold for text readability */
+}
+
+/* Premium Buttons: Gold Background, Dark Text for Contrast */
+.btn-brand-primary {
+  background-color: var(--brand-secondary);
+  border-color: var(--brand-secondary);
+  color: var(--brand-primary);
+  /* Dark Blue text on Gold bg */
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-brand-primary:hover {
+  background-color: var(--brand-primary);
+  /* Dark Blue bg on hover */
+  border-color: var(--brand-primary);
+  color: var(--brand-secondary);
+  /* Gold text on hover */
+  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-brand-functional {
+  background-color: var(--brand-functional);
+  border-color: var(--brand-functional);
+  color: #fff;
+}
+
+.btn-brand-functional:hover {
+  background-color: #7d1528;
+  border-color: #7d1528;
+  color: #fff;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, var(--brand-primary), #0b3d7a);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 33, 71, 0.15);
+}
+
+/* Cards */
+.card-hover {
+  transition: transform .2s ease, box-shadow .2s ease;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+}
+
+.product-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background: #fff;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+.price {
+  color: var(--brand-secondary);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.container {
+  padding-bottom: 40px;
+}
+
+/* Footer */
+#footer {
+  margin-top: auto;
+}
+
+.urun-kart {
+  cursor: pointer;
+}
+
+.urun-kart button,
+.urun-kart input {
+  cursor: auto;
+}
+
+/* Favori Kalp */
+.kalp-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.kalp-icon {
+  width: 26px;
+  height: 26px;
+  stroke: var(--brand-primary);
+  fill: #fff;
+  transition: fill 0.2s ease, transform 0.2s;
+}
+
+.kalp-icon:hover {
+  transform: scale(1.1);
+}
+
+.kalp-icon.kirmizi {
+  fill: var(--brand-functional);
+  stroke: var(--brand-functional);
+}
+
+.favori-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.favori-satir {
+  cursor: pointer;
+}
+
+.favori-satir:hover {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Admin Panel Tables */
+.table thead th {
+  background-color: var(--brand-primary);
+  color: #fff;
+  border: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(197, 160, 89, 0.1);
+  /* Subtle Gold Tint */
+}
+
+/* Bootstrap Overrides for Brand Consistency */
+.text-danger {
+  color: var(--brand-functional) !important;
+}
+
+.btn-outline-danger {
+  color: var(--brand-functional);
+  border-color: var(--brand-functional);
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--brand-functional);
+  color: #fff;
+  border-color: var(--brand-functional);
+}
+
+
+.badge.bg-success {
+  background-color: var(--brand-secondary) !important;
+  /* New items -> Gold */
+  color: #fff;
+}
+
+/* Custom Checkboxes */
+.form-check-input:checked {
+  background-color: var(--brand-secondary);
+  border-color: var(--brand-secondary);
+}
+
+.table td .form-check-input {
+  cursor: pointer;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Floating Action Bar */
+.floating-action-bar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(150%);
+  background-color: var(--brand-primary);
+  color: #fff;
+  padding: 1rem 0;
+  border-radius: 100px;
+  box-shadow: 0 10px 40px rgba(0, 33, 71, 0.4);
+  z-index: 1050;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 320px;
+  max-width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floating-action-bar.active {
+  transform: translateX(-50%) translateY(0);
+}
+
+.floating-action-bar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Heart Icon SVG consistency */
+.heart-button {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.heart-button:hover {
+  transform: scale(1.1);
+}
+
+.heart-button svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--brand-primary);
+  stroke-width: 2;
+  fill: none;
+  transition: all 0.2s;
+}
+
+.heart-button.active svg {
+  fill: var(--brand-functional);
+  stroke: var(--brand-functional);
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
